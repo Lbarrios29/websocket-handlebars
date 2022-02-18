@@ -10,5 +10,11 @@
     "precio": "456",
     "url": "https://res.cloudinary.com/dd0wq3bwd/image/upload/v1638825462/productos/brocha_mruzut.jpg",
     "id": 2
+  },
+  {
+    "nombre": "paleta",
+    "precio": "5111",
+    "url": "https://res.cloudinary.com/dd0wq3bwd/image/upload/v1638825462/productos/paleta_mwqvgt.jpg",
+    "id": 3
   }
 ]
