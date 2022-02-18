@@ -1,0 +1,124 @@
+    <main>
+        <br>
+        <div class="container bg-light">
+
+            <h1 class="p-2 text-start">Ingrese Producto</h1>
+
+            <!-- Formulario -->
+            <form id="form-productos" class="ms-2 pb-4 fw-bold" action="/productos" method="POST">
+
+                <div class="d-flex flex-column gap-2">
+
+                    <div class="w-25">
+                        <label for="nombre" class="form-label">
+                            Nombre
+                        </label>
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" required>
+                    </div>
+
+                    <div class="w-25">
+                        <label for="precio" class="form-label">
+                            Precio
+                        </label>
+                        <input type="number" min="1" name="precio" id="precio" class="form-control" placeholder="Precio"
+                            required>
+                    </div>
+
+                    <div class="w-50">
+                        <label for="url" class="form-label">
+                            Foto URL
+                        </label>
+                        <input type="text" name="url" id="url" class="form-control" placeholder="URL Imagen" required>
+                    </div>
+
+                </div>
+
+                <!-- Botones -->
+                <div class="d-grid gap-2 d-md-block mt-3">
+                    <button type="submit" class="btn btn-dark fw-bold">
+                        Enviar
+                    </button>
+
+                    <button type="reset" class="btn btn-dark fw-bold">
+                        Reset
+                    </button>
+                </div>
+
+            </form>
+
+            <hr>
+            {{!-- Tabla --}}
+            <div id="tabla">
+                <h2 class="p-2 text-start">Lista de productos</h2>
+                <table class="table table-dark table-sm align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Foto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listado">
+                    </tbody>
+                </table>
+            </div>
+            <div id="noProducts" class="bg-secondary"> 
+                <p class="text-dark fs-3 m-3 p-3 text-center">No se encontraron productos</p>
+            </div>
+   
+            <hr>
+            {{!-- Chat --}}
+            <div class="row">
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title p-2 text-start text-primary">Centro de mensajes</h3>
+                        </div>
+                        <div class="card-body">
+
+                            <form class="form-group" id="chat_data" class="ms-2 pb-4 fw-bold">
+
+                                <div class="d-flex flex-column gap-2">
+
+                                    <div class="w-50">
+                                        {{!-- <label for="email" class="form-label fw-bold">
+                                            Email
+                                        </label> --}}
+                                        <input type="email" name="email" id="email" class="form-control" placeholder="Ingrese su email" required>
+                                    </div>
+                                    <p id="mensajes"></p>
+                                    <div class="d-flex flex-row w-100 gap-2">
+                                        {{!-- <label for="mensaje" class="form-label fw-bold">
+                                            Mensaje
+                                        </label> --}}
+                                        <div class="w-50">
+                                            <input type="text" name="mensaje" id="mensaje" class="form-control" placeholder="Ingrese su mensaje"
+                                                required>
+                                        </div>
+                                        <div>    
+                                        {{!-- <button type="submit" class="btn btn-dark fw-bold mt-3"> --}}
+                                            <button type="submit" class="btn btn-dark fw-bold">    
+                                                Enviar
+                                            </button>
+                                        </div>
+                                    </div>
+                                
+                                </div>
+                        
+
+                            </form>
+                            
+                            <br>
+                            {{!-- <h4>Mensajes:</h4> --}}
+                            {{!-- <p id="mensajes"></p> --}}
+
+                        </div>    
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+            <br>
+
+        </div>
+    </main>
+    <br>

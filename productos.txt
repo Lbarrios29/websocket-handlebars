@@ -1,0 +1,14 @@
+[
+  {
+    "nombre": "auto",
+    "precio": "324",
+    "url": "https://cdn3.iconfinder.com/data/icons/game-play/512/gaming-game-play-multimedia-console-35-128.png",
+    "id": 1
+  },
+  {
+    "nombre": "makeup",
+    "precio": "456",
+    "url": "https://res.cloudinary.com/dd0wq3bwd/image/upload/v1638825462/productos/brocha_mruzut.jpg",
+    "id": 2
+  }
+]
