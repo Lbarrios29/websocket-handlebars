@@ -1,22 +1,30 @@
 const express = require('express');
 const moment = require('moment');
 const fs = require('fs');
-const productoFileService = require("./utils/productoFileService");
-const mensajesChat = require("./utils/mensajesChat");
+// const productoFileService = require("./utils/productoFileService");
+// const mensajesChat = require("./utils/mensajesChat");
+const productoService = require("./utils/productServiceDB");
+const mensajesChatService = require("./utils/mensajesChatServiceDB");
 const app = express();
 const hbs = require('express-handlebars'); 
 let {Server: HttpServer} = require("http");
 let {Server: SocketIO} = require("socket.io");
 const { config } = require("./config");
 const PORT = config.port;
+let cors = require("cors");
+let { sqlite3DB, mysqlDB} = require("./config/database");
 
+// Middlewares
+app.use(cors("*"));
+
+// Settings
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 let http = new HttpServer(app);
 let socketIO = new SocketIO(http);
-let productos = [];
-let mensajes = [];
+// let productos = [];
+// let mensajes = [];
 
 app.engine("handlebars", hbs.engine());
 app.set("views", "./views/hbs");
@@ -27,11 +35,17 @@ socketIO.on('connection', async(socket) => {
   try {
     
     console.log('Nueva conexion');
-    const productoFile = new productoFileService(fs,'./productos.txt');
-    const msjChat = new mensajesChat(fs,'./mensajes.txt');
+    // const productoFile = new productoFileService(fs,'./productos.txt');
+    // const msjChat = new mensajesChat(fs,'./mensajes.txt');
 
+    const productServiceDB = new productoService(mysqlDB,'productos');
+    const mensajesChatServiceDB = new mensajesChatService(sqlite3DB,'chats');
+
+    let productos = [];
+    let mensajes = [];
+    
     // Obtiene los productos
-    productos = await productoFile.getAll();
+    productos = await productServiceDB.getAll();
     // productos = JSON.parse(productos);
 
     // Emite en canal fill_list
@@ -42,8 +56,11 @@ socketIO.on('connection', async(socket) => {
       
       try {
         
-        productos.push(data);
-        await productoFile.save(data);
+        // productos.push(data);
+        await productServiceDB.create(data);
+
+        // Obtiene los productos
+        let productos = await productServiceDB.getAll();
 
         // Emite en canal fill_list
         socketIO.sockets.emit('fill_list', productos);
@@ -55,17 +72,23 @@ socketIO.on('connection', async(socket) => {
     });
 
     // Obtiene los mensajes
-    mensajes = await msjChat.getAll();
+    mensajes = await mensajesChatServiceDB.getAll();
 
     // Emite en canal chat_message
     socket.emit('chat_message', mensajes);
     
     // Escucha en canal chat_message
-    socket.on('chat_message', (data) => {
+    socket.on('chat_message', async(data) => {
 
-      let aux = {...data, id:socket.id, date: moment().format("HH:mm DD-MM-YYYY") };
-      mensajes.push(aux);
-      msjChat.save(aux);
+      // let aux = {...data, id:socket.id, date: moment().format("HH:mm DD-MM-YYYY") };
+      let aux = {...data, date: moment().format("HH:mm DD-MM-YYYY") };
+      // mensajes.push(aux);
+      
+      await mensajesChatServiceDB.create(aux);
+      
+      // Obtiene los mensajes
+      let mensajes = await mensajesChatServiceDB.getAll();
+      
       socketIO.sockets.emit('chat_message', mensajes);
 
     });
