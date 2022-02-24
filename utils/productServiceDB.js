@@ -4,36 +4,6 @@
         
         this.db = db;
         this.nameTable = nameTable;
-        // let tableExist;
-
-        // this.db.schema.hasTable(this.nameTable)
-        //     .then(()=> { 
-        //         tableExist = true;
-        //         return console.log("Tabla ya existe",tableExist)
-        //     })
-        //     .catch((err)=>{
-        //         console.log("Catch hasTable",err)
-        //     })
-        //     .finally(()=>{
-        //         this.db.destroy();
-        //     });
-        
-        //     if(!tableExist){
-                
-        //         this.db.schema.createTable(this.nameTable, table =>{
-        //                 table.increments("id").primary(),
-        //                 table.string("nombre"),
-        //                 table.float("precio"),
-        //                 table.string("url")
-        //         })
-        //             .then(()=> console.log("tabla creada"))
-        //             .catch((err)=>{
-        //                 console.log("Catch",err)
-        //             })
-        //             .finally(()=>{
-        //                 this.db.destroy();
-        //             });
-        //     }
 
             this.db.schema.hasTable(this.nameTable)
                 .then( (exists) => {
